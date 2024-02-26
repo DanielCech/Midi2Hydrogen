@@ -5,40 +5,34 @@ import ScriptToolkit
 import SwiftShell
 import CoreMIDI
 
-let moderator = Moderator(description: "CropPDF - Crop pdf insets for practising on iPad")
+let moderator = Moderator(description: "Midi2Hydrogen - Convert MIDI files to Hydrogen songs")
 
-let inputDirArgument = Argument<String?>
-    .optionWithValue("input", name: "Input directory", description: "Script works only locally and need to set current path")
-let inputDir = moderator.add(inputDirArgument)
+let inputFileArgument = Argument<String?>
+    .optionWithValue("input", name: "Input file", description: "Path to MIDI file")
+let inputFile = moderator.add(inputFileArgument)
 
-let outputDirArgument = Argument<String?>
-    .optionWithValue("output", name: "Output directory", description: "Output directory for generated pdfs")
-    .default(main.currentdirectory.appending("output"))
-let outputDir = moderator.add(outputDirArgument)
-
-let files = moderator.add(Argument<String?>.singleArgument(name: "multiple").repeat())
+let outputFileArgument = Argument<String?>
+    .optionWithValue("output", name: "Output file", description: "Path to result Hydrogen song")
+let outputFile = moderator.add(outputFileArgument)
 
 do {
     try moderator.parse()
 
-    guard !files.value.isEmpty || inputDir.value == nil else {
+    guard let inputFileName = inputFile.value else {
         print(moderator.usagetext)
         exit(0)
     }
 
-    main.currentdirectory = inputDir.value!
+    var outputFileName: String
+    if let output = outputFile.value {
+        outputFileName = output
+    } else {
+        outputFileName = inputFileName + ".h2song"
+    }
 
     print("⌚️ Processing")
 
-    try Folder.root.createSubfolderIfNeeded(at: outputDir.value)
-
-    let outputFolder = try Folder(path: outputDir.value)
-
-    for item in files.value {
-        let file = try File(path: item)
-        let newName = outputFolder.path.appending(file.name)
-        try file.cropPDF(newName: newName, insets: NSEdgeInsets(top: -4, left: -2, bottom: -4, right: -2))
-    }
+    try convertMIDItoHydrogen(input: inputFileName, output: outputFileName)
 
     print("✅ Done")
 }
