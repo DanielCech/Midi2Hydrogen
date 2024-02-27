@@ -1,0 +1,402 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		29215CE827CC30CF005B706C /* Midi2HydrogenCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 29215CE727CC30CF005B706C /* Midi2HydrogenCommon */; };
+		29215CEA27CC3965005B706C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29215CE927CC3956005B706C /* Assets.xcassets */; };
+		29FC959927CC154B006D8CDF /* Midi2HydrogenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC959827CC154B006D8CDF /* Midi2HydrogenApp.swift */; };
+		31BA90FC29C371AB00FCD505 /* audio3D.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 31BA90FB29C371AB00FCD505 /* audio3D.scnassets */; };
+		5A0C234827D7CA4E003E281C /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 5A0C234727D7CA4E003E281C /* Sounds */; };
+		C446DE542528D8E700138D0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C446DE522528D8E700138D0A /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		29215CE527CC30A0005B706C /* Midi2HydrogenCommon */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Midi2HydrogenCommon; sourceTree = "<group>"; };
+		29215CE927CC3956005B706C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		29FC959827CC154B006D8CDF /* Midi2HydrogenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Midi2HydrogenApp.swift; sourceTree = "<group>"; };
+		31BA90FB29C371AB00FCD505 /* audio3D.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = audio3D.scnassets; sourceTree = "<group>"; };
+		3DE748C7278CD61C0082C51F /* DEVELOPMENT_TEAM.template.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = DEVELOPMENT_TEAM.template.xcconfig; sourceTree = "<group>"; };
+		3DE748C8278CD61C0082C51F /* DEVELOPMENT_TEAM.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = DEVELOPMENT_TEAM.xcconfig; sourceTree = "<group>"; };
+		3DE748C9278CD61C0082C51F /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
+		5A0C234727D7CA4E003E281C /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
+		C446DE442528D8E600138D0A /* Midi2Hydrogen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Midi2Hydrogen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C446DE532528D8E700138D0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C446DE552528D8E700138D0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C474C9C525290C83005EEB80 /* SampleCode.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SampleCode.xcconfig; sourceTree = "<group>"; };
+		C4A2F2C3253D45D4007C1032 /* Midi2Hydrogen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Midi2Hydrogen.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C446DE412528D8E600138D0A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29215CE827CC30CF005B706C /* Midi2HydrogenCommon in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3DE748C6278CD61C0082C51F /* Xcode-config */ = {
+			isa = PBXGroup;
+			children = (
+				3DE748C7278CD61C0082C51F /* DEVELOPMENT_TEAM.template.xcconfig */,
+				3DE748C8278CD61C0082C51F /* DEVELOPMENT_TEAM.xcconfig */,
+				3DE748C9278CD61C0082C51F /* Shared.xcconfig */,
+			);
+			name = "Xcode-config";
+			path = "../Xcode-config";
+			sourceTree = "<group>";
+		};
+		C446DE3B2528D8E600138D0A = {
+			isa = PBXGroup;
+			children = (
+				5A0C234727D7CA4E003E281C /* Sounds */,
+				29215CE527CC30A0005B706C /* Midi2HydrogenCommon */,
+				C446DE462528D8E600138D0A /* Midi2Hydrogen */,
+				C474C9C425290C83005EEB80 /* Configuration */,
+				C446DE452528D8E600138D0A /* Products */,
+				C48C17E0258F050300F1BA6B /* Frameworks */,
+				3DE748C6278CD61C0082C51F /* Xcode-config */,
+			);
+			sourceTree = "<group>";
+		};
+		C446DE452528D8E600138D0A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C446DE442528D8E600138D0A /* Midi2Hydrogen.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C446DE462528D8E600138D0A /* Midi2Hydrogen */ = {
+			isa = PBXGroup;
+			children = (
+				31BA90FB29C371AB00FCD505 /* audio3D.scnassets */,
+				C4A2F2C3253D45D4007C1032 /* Midi2Hydrogen.entitlements */,
+				29FC959827CC154B006D8CDF /* Midi2HydrogenApp.swift */,
+				C446DE522528D8E700138D0A /* LaunchScreen.storyboard */,
+				29215CE927CC3956005B706C /* Assets.xcassets */,
+				C446DE552528D8E700138D0A /* Info.plist */,
+			);
+			path = Midi2Hydrogen;
+			sourceTree = "<group>";
+		};
+		C474C9C425290C83005EEB80 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				C474C9C525290C83005EEB80 /* SampleCode.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		C48C17E0258F050300F1BA6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C446DE432528D8E600138D0A /* Midi2Hydrogen */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C446DE6E2528D8E800138D0A /* Build configuration list for PBXNativeTarget "Midi2Hydrogen" */;
+			buildPhases = (
+				C446DE402528D8E600138D0A /* Sources */,
+				C446DE412528D8E600138D0A /* Frameworks */,
+				C446DE422528D8E600138D0A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Midi2Hydrogen;
+			packageProductDependencies = (
+				29215CE727CC30CF005B706C /* Midi2HydrogenCommon */,
+			);
+			productName = Midi2Hydrogen;
+			productReference = C446DE442528D8E600138D0A /* Midi2Hydrogen.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C446DE3C2528D8E600138D0A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					C446DE432528D8E600138D0A = {
+						CreatedOnToolsVersion = 12.0;
+					};
+				};
+			};
+			buildConfigurationList = C446DE3F2528D8E600138D0A /* Build configuration list for PBXProject "Midi2Hydrogen" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C446DE3B2528D8E600138D0A;
+			packageReferences = (
+			);
+			productRefGroup = C446DE452528D8E600138D0A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C446DE432528D8E600138D0A /* Midi2Hydrogen */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C446DE422528D8E600138D0A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A0C234827D7CA4E003E281C /* Sounds in Resources */,
+				29215CEA27CC3965005B706C /* Assets.xcassets in Resources */,
+				C446DE542528D8E700138D0A /* LaunchScreen.storyboard in Resources */,
+				31BA90FC29C371AB00FCD505 /* audio3D.scnassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C446DE402528D8E600138D0A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29FC959927CC154B006D8CDF /* Midi2HydrogenApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C446DE522528D8E700138D0A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C446DE532528D8E700138D0A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C446DE6C2528D8E800138D0A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DE748C9278CD61C0082C51F /* Shared.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C446DE6D2528D8E800138D0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DE748C9278CD61C0082C51F /* Shared.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C446DE6F2528D8E800138D0A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = Midi2Hydrogen/Midi2Hydrogen.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2A58B7F5DW;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Midi2Hydrogen/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cz.dancech.test;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SAMPLE_CODE_DISAMBIGUATOR = "${DEVELOPMENT_TEAM}";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+			};
+			name = Debug;
+		};
+		C446DE702528D8E800138D0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = Midi2Hydrogen/Midi2Hydrogen.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2A58B7F5DW;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Midi2Hydrogen/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cz.dancech.test;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SAMPLE_CODE_DISAMBIGUATOR = "${DEVELOPMENT_TEAM}";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C446DE3F2528D8E600138D0A /* Build configuration list for PBXProject "Midi2Hydrogen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C446DE6C2528D8E800138D0A /* Debug */,
+				C446DE6D2528D8E800138D0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C446DE6E2528D8E800138D0A /* Build configuration list for PBXNativeTarget "Midi2Hydrogen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C446DE6F2528D8E800138D0A /* Debug */,
+				C446DE702528D8E800138D0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		29215CE727CC30CF005B706C /* Midi2HydrogenCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Midi2HydrogenCommon;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C446DE3C2528D8E600138D0A /* Project object */;
+}
