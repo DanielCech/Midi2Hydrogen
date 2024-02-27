@@ -14,9 +14,9 @@ public struct MIDITrackDemo: View {
     }
 
     public var body: some View {
-        VStack {
-            HStack {
-                Button("Select File...")  {
+        VStack(spacing: 80) {
+            HStack(spacing: 20) {
+                Button("Select File...") {
                     isImporting = true
                 }
                 .padding()
@@ -26,15 +26,15 @@ public struct MIDITrackDemo: View {
                         .stroke(Color.white, lineWidth: 2)
                 )
                 .fileImporter(isPresented: $isImporting,
-                    allowedContentTypes: [.png, .jpeg, .tiff],
-                    onCompletion: { result in
+                              allowedContentTypes: [.png, .jpeg, .tiff],
+                              onCompletion: { result in
 
                     switch result {
-                        case .success(let url):
-                            print("success")
-                            // url contains the URL of the chosen file.
-                        case .failure(let error):
-                            print(error)
+                    case .success(let url):
+                        print("success")
+                        // url contains the URL of the chosen file.
+                    case .failure(let error):
+                        print(error)
                     }
                 })
 
@@ -50,26 +50,27 @@ public struct MIDITrackDemo: View {
                 )
             }
 
-
+            Spacer()
 
             GeometryReader { geometry in
-                ScrollView {
-                    if let fileURL = fileURL {
-                        ForEach(
-                            MIDIFile(url: fileURL).tracks.indices, id: \.self
-                        ) { number in
-                            MIDITrackView(fileURL: $fileURL,
-                                          trackNumber: number,
-                                          trackWidth: geometry.size.width,
-                                          trackHeight: 200.0)
-                                .background(Color.primary)
-                                .cornerRadius(10.0)
-                        }
+                if let fileURL = fileURL {
+                    ForEach(
+                        MIDIFile(url: fileURL).tracks.indices, id: \.self
+                    ) { number in
+                        MIDITrackView(fileURL: $fileURL,
+                                      trackNumber: number,
+                                      trackWidth: geometry.size.width,
+                                      trackHeight: 200.0)
+                        .background(Color.primary)
+                        .cornerRadius(10.0)
                     }
                 }
             }
+
+            Spacer()
         }
         .padding()
+        .background(Color.secondary)
         .navigationBarTitle(Text("Midi2Hydrogen"))
         .onTapGesture {
             isPlaying.toggle()
@@ -92,5 +93,5 @@ public struct MIDITrackDemo: View {
             viewModel.stopEngine()
         })
         .environmentObject(viewModel)
-    }
+}
 }
