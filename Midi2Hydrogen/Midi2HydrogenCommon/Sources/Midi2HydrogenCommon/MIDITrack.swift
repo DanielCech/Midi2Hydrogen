@@ -5,6 +5,7 @@ import SwiftUI
 
 public struct MIDITrackDemo: View {
     @StateObject var viewModel = MIDITrackViewModel()
+    @StateObject var convertor = Convertor()
     @State var fileURL: URL? = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
     @State var isPlaying = false
     @State private var isImporting: Bool = false
@@ -31,8 +32,8 @@ public struct MIDITrackDemo: View {
 
                     switch result {
                     case .success(let url):
-                        print("success")
-                        // url contains the URL of the chosen file.
+                        convertor.openFile(url: url)
+                        
                     case .failure(let error):
                         print(error)
                     }
