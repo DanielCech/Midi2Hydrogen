@@ -1,6 +1,7 @@
 import AudioKit
 import CoreMIDI
 import Foundation
+
 struct StMIDIEvent: Decodable, Encodable {
     var statusType: Int // AudioKit MIDIStatusType enum
     var channel: MIDIChannel
