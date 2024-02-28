@@ -16,7 +16,7 @@ public struct MIDITrackDemo: View {
     public var body: some View {
         VStack(spacing: 80) {
             HStack(spacing: 20) {
-                Button("Select File...") {
+                Button("Open MIDI File...") {
                     isImporting = true
                 }
                 .padding()
@@ -39,7 +39,7 @@ public struct MIDITrackDemo: View {
                 })
 
 
-                Button("Convert") {
+                Button("Convert to Hydrogen Song") {
 
                 }
                 .padding()
@@ -70,7 +70,10 @@ public struct MIDITrackDemo: View {
             Spacer()
         }
         .padding()
-        .background(Color.secondary)
+        .background(
+            Image("Background")
+                .resizable(resizingMode: .stretch)
+        )
         .navigationBarTitle(Text("Midi2Hydrogen"))
         .onTapGesture {
             isPlaying.toggle()
