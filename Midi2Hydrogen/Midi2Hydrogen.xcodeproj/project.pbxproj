@@ -145,6 +145,7 @@
 			);
 			mainGroup = C446DE3B2528D8E600138D0A;
 			packageReferences = (
+				27ACEC6C2B8F61E500E3B960 /* XCRemoteSwiftPackageReference "SwiftyXML" */,
 			);
 			productRefGroup = C446DE452528D8E600138D0A /* Products */;
 			projectDirPath = "";
@@ -371,6 +372,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27ACEC6C2B8F61E500E3B960 /* XCRemoteSwiftPackageReference "SwiftyXML" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:chenyunguiMilook/SwiftyXML.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		29215CE727CC30CF005B706C /* Midi2HydrogenCommon */ = {

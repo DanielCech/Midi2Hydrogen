@@ -118,6 +118,15 @@
       }
     },
     {
+      "identity" : "swiftyxml",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:chenyunguiMilook/SwiftyXML.git",
+      "state" : {
+        "revision" : "30040f38675bc3a1666a0b0f6417adabaf26a3c6",
+        "version" : "3.1.0"
+      }
+    },
+    {
       "identity" : "timecodekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/orchetect/TimecodeKit",
