@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftyXML
 
 public class Convertor: ObservableObject {
+
+    var hydrogenSong: XML?
 
     public init() {
 
@@ -15,5 +18,10 @@ public class Convertor: ObservableObject {
 
     public func openFile(url: URL) {
         // TODO
+    }
+
+    public func openSong() {
+        hydrogenSong = XML(string: song)
+        print(String(describing: hydrogenSong))
     }
 }

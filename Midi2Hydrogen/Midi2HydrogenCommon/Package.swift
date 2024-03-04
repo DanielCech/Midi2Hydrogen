@@ -21,12 +21,13 @@ let package = Package(
         .package(url: "https://github.com/AudioKit/Flow",              from: "1.0.0"),
         .package(url: "https://github.com/AudioKit/PianoRoll",         from: "1.0.0"),
         .package(url: "https://github.com/orchetect/MIDIKit",          from: "0.9.4"),
+        .package(url: "https://github.com/chenyunguiMilook/SwiftyXML.git", from: "3.0.2")
     ],
     targets: [
         .target(
             name: "Midi2HydrogenCommon",
             dependencies: ["AudioKit", "AudioKitUI", "AudioKitEX", "Keyboard", "SoundpipeAudioKit",
-                           "SporthAudioKit", "STKAudioKit", "DunneAudioKit", "Tonic", "Controls", "Waveform", "Flow", "PianoRoll", "MIDIKit"],
+                           "SporthAudioKit", "STKAudioKit", "DunneAudioKit", "Tonic", "Controls", "Waveform", "Flow", "PianoRoll", "MIDIKit", "SwiftyXML"],
             resources: [
                 .copy("MIDI Files"),
                 .copy("Samples"),

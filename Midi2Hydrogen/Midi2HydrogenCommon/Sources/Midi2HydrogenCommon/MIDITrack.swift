@@ -27,11 +27,12 @@ public struct MIDITrackDemo: View {
                         .stroke(Color.white, lineWidth: 2)
                 )
                 .fileImporter(isPresented: $isImporting,
-                              allowedContentTypes: [.png, .jpeg, .tiff],
+                              allowedContentTypes: [.midi],
                               onCompletion: { result in
 
                     switch result {
                     case .success(let url):
+                        convertor.openSong()
                         convertor.openFile(url: url)
                         
                     case .failure(let error):
