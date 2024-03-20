@@ -21,6 +21,8 @@ struct Note {
 
 public class Convertor: ObservableObject {
 
+    var midiFileURL: URL?
+
     var hydrogenSong: XML?
 
     /// magic number for resolution of hydrogen files
@@ -32,11 +34,15 @@ public class Convertor: ObservableObject {
     /// number of beats per quarter in midi file / number of beats per quater in hydrogen
     var resolutionRatio: Double = 1
 
+    var notes = [Note]()
+
     public init() {
 
     }
 
     public func openFile(url: URL) {
+        midiFileURL = url
+
         let midiFile = MIDIFile(url: url)
         print(String(describing: midiFile))
 
@@ -48,7 +54,8 @@ public class Convertor: ObservableObject {
         }
         
         var tickCount: Double = 0
-        var notes = [Note]()
+
+        notes = []
 
         firstTrack.events.forEach { event in
             guard 
@@ -75,8 +82,21 @@ public class Convertor: ObservableObject {
 
     }
 
-    public func openSong() {
+    public func saveHydrogenSong() throws {
+        guard
+            let midiFileURL
+        else {
+            return
+        }
+
+
+        let hydrogenSongURL = midiFileURL.appendingPathExtension("h2song")
+        try? FileManager.default.removeItem(at: hydrogenSongURL)
+
         hydrogenSong = XML(string: song)
-        print(String(describing: hydrogenSong))
+
+        let contents = hydrogenSong?.toXMLString()
+        print(contents)
+        // try contents?.write(to: hydrogenSongURL, atomically: true, encoding: .utf8)
     }
 }
