@@ -12,19 +12,6 @@ import AudioKitEX
 import AudioKitUI
 import SwiftUI
 
-struct Note {
-    let position: Int
-    let velocity: Double
-    let instrument: Int
-}
-
-struct Pattern {
-    let name: String
-    let size: Int
-    let noteList: [Note]
-}
-
-
 public class Convertor: ObservableObject {
 
     var midiFileURL: URL?
