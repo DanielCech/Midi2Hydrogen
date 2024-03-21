@@ -18,6 +18,12 @@ struct Note {
     let instrument: Int
 }
 
+struct Pattern {
+    let name: String
+    let size: Int
+    let noteList: [Note]
+}
+
 
 public class Convertor: ObservableObject {
 
@@ -83,13 +89,28 @@ public class Convertor: ObservableObject {
     }
 
     public func saveHydrogenSong(url: URL) throws {
-        let modifiedUrl = url.deletingPathExtension().appendingPathExtension("h2song")
+        // let modifiedUrl = url.deletingPathExtension().appendingPathExtension("h2song")
 
         try? FileManager.default.removeItem(at: url)
 
         hydrogenSong = XML(string: song)
+        savePatternList()
+        savePatternSequence()
 
         let contents = hydrogenSong?.toXMLString()
         try contents?.write(to: url, atomically: true, encoding: .utf8)
+    }
+
+
+    private func savePatternList() {
+        guard let song = try? hydrogenSong?.song.getXML() else { return }
+        let patternList = song.addChild(XML(named: "patternList"))
+        patternList.addChild(XML(named: "pattern"))
+    }
+
+    private func savePatternSequence() {
+        guard let song = try? hydrogenSong?.song.getXML() else { return }
+        let patternSequence = song.addChild(XML(named: "patternSequence"))
+        patternSequence.addChild(XML(named: "pattern"))
     }
 }
