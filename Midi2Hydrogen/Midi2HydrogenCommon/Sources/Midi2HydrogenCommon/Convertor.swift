@@ -27,6 +27,12 @@ public class Convertor: ObservableObject {
     /// number of beats per quarter in midi file / number of beats per quater in hydrogen
     var resolutionRatio: Double = 1
 
+    /// Array of rhytm patterns
+    var patternList = [Pattern]()
+
+    /// A sequence of patterns that makes song
+    var patternSequence = [String]()
+
     var notes = [Note]()
 
     public init() {
@@ -49,6 +55,8 @@ public class Convertor: ObservableObject {
         var tickCount: Double = 0
 
         notes = []
+        patternList = []
+        patternSequence = ["Pattern1"]
 
         firstTrack.events.forEach { event in
             guard 
@@ -73,6 +81,9 @@ public class Convertor: ObservableObject {
             }
         }
 
+        let pattern = Pattern(name: "Pattern1", size: Int(tickCount), noteList: notes)
+
+        patternList = [pattern]
     }
 
     public func saveHydrogenSong(url: URL) throws {
@@ -90,14 +101,47 @@ public class Convertor: ObservableObject {
 
 
     private func savePatternList() {
-        guard let song = try? hydrogenSong?.song.getXML() else { return }
-        let patternList = song.addChild(XML(named: "patternList"))
-        patternList.addChild(XML(named: "pattern"))
+        guard let patternListTag = try? hydrogenSong?.patternList.getXML() else { return }
+        for pattern in patternList {
+            patternListTag.addChild(patternXML(pattern))
+        }
+    }
+
+    private func patternXML(_ pattern: Pattern) -> XML {
+        let nameTag = XML(name: "name", value: pattern.name)
+        let categoryTag = XML(name: "category", value: "unknown")
+        let sizeTag = XML(name: "size", value: 192)
+        let denominatorTag = XML(name: "denominator", value: "4")
+        let noteListTag = XML(name: "notelist")
+        for note in pattern.noteList {
+            let positionTag = XML(name: "position", value: note.position)
+            let leadlagTag = XML(name: "leadlag", value: 0)
+            let velocityTag = XML(name: "velocity", value: note.velocity)
+            let panTag = XML(name: "velocity", value: 0)
+            let pitchTag = XML(name: "pitch", value: 0)
+            let keyTag = XML(name: "key", value: "C0")
+            let lengthTag = XML(name: "length", value: "-1")
+            let instrumentTag = XML(name: "instrument", value: note.instrument)
+
+            let noteTag = XML(name: "note")
+                .addChildren([positionTag, leadlagTag, velocityTag, panTag, pitchTag, keyTag, lengthTag, instrumentTag])
+
+            noteListTag.addChild(noteTag)
+        }
+
+        let patternTag = XML(name: "pattern")
+            .addChildren([nameTag, categoryTag, sizeTag, denominatorTag, noteListTag])
+
+        return patternTag
     }
 
     private func savePatternSequence() {
-        guard let song = try? hydrogenSong?.song.getXML() else { return }
-        let patternSequence = song.addChild(XML(named: "patternSequence"))
-        patternSequence.addChild(XML(named: "pattern"))
+        guard let patternSequenceTag = try? hydrogenSong?.patternSequence.getXML() else { return }
+
+        for item in patternSequence {
+            let patternId = XML(name: "patternID", value: item)
+            let groupTag = XML(name: "group").addChild(patternId)
+            patternSequenceTag.addChild(groupTag)
+        }
     }
 }
