@@ -4,7 +4,7 @@ import AudioKitUI
 import SwiftUI
 import UniformTypeIdentifiers
 
-public struct MIDITrackDemo: View {
+public struct ContentView: View {
     @StateObject var viewModel = MIDITrackViewModel()
     @StateObject var convertor = Convertor()
     @State var fileURL: URL? = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
@@ -37,7 +37,6 @@ public struct MIDITrackDemo: View {
                     switch result {
                     case .success(let url):
                         convertor.openFile(url: url)
-                        try? convertor.saveHydrogenSong()
 
                     case .failure(let error):
                         print(error)
@@ -57,7 +56,8 @@ public struct MIDITrackDemo: View {
                 .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .plainText) { result in
                     switch result {
                     case .success(let url):
-                        print("Saved to \(url)")
+                        try? convertor.saveHydrogenSong(url: url)
+
                     case .failure(let error):
                         print(error.localizedDescription)
                     }

@@ -9,7 +9,7 @@ import SwiftUI
 struct Midi2HydrogenApp: App {
     var body: some Scene {
         WindowGroup {
-            MIDITrackDemo()
+            ContentView()
         }
     }
 }

@@ -82,21 +82,14 @@ public class Convertor: ObservableObject {
 
     }
 
-    public func saveHydrogenSong() throws {
-        guard
-            let midiFileURL
-        else {
-            return
-        }
+    public func saveHydrogenSong(url: URL) throws {
+        let modifiedUrl = url.deletingPathExtension().appendingPathExtension("h2song")
 
-
-        let hydrogenSongURL = midiFileURL.appendingPathExtension("h2song")
-        try? FileManager.default.removeItem(at: hydrogenSongURL)
+        try? FileManager.default.removeItem(at: url)
 
         hydrogenSong = XML(string: song)
 
         let contents = hydrogenSong?.toXMLString()
-        print(contents)
-        // try contents?.write(to: hydrogenSongURL, atomically: true, encoding: .utf8)
+        try contents?.write(to: url, atomically: true, encoding: .utf8)
     }
 }
