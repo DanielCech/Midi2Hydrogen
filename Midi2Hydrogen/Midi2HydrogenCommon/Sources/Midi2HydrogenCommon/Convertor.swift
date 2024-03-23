@@ -73,11 +73,6 @@ public class Convertor: ObservableObject {
                 tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
                 lastPositionInBeats = positionInBeats
 
-//                let increment = positionInBeats
-//                tickCount += (increment - lastPosition) * Double(midiResolution)
-//                lastPosition = positionInBeats
-//                lastPosition = tickCount
-
                 notes.append(
                     Note(
                         position: Int(round(Double(tickCount) / resolutionRatio)),
@@ -86,7 +81,6 @@ public class Convertor: ObservableObject {
                     )
                 )
             } else if type == .noteOff {
-//                tickCount += positionInBeats * Double(midiResolution)
                 tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
                 lastPositionInBeats = positionInBeats
             }
@@ -101,7 +95,7 @@ public class Convertor: ObservableObject {
 
     public func saveHydrogenSong(url: URL) throws {
         // let modifiedUrl = url.deletingPathExtension().appendingPathExtension("h2song")
-
+//        let documentUrl = url.deletingPathExtension().appendingPathExtension("h2song")
         try? FileManager.default.removeItem(at: url)
 
         hydrogenSong = XML(string: song)
