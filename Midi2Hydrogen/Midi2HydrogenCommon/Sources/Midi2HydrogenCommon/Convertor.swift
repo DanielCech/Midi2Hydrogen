@@ -58,6 +58,8 @@ public class Convertor: ObservableObject {
         patternList = []
         patternSequence = ["Pattern1"]
 
+        var lastPositionInBeats: Double = 0
+
         firstTrack.events.forEach { event in
             guard 
                 let status = event.status,
@@ -68,20 +70,31 @@ public class Convertor: ObservableObject {
             }
 
             if type == .noteOn {
-                tickCount += positionInBeats * Double(midiResolution)
+                tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
+                lastPositionInBeats = positionInBeats
+
+//                let increment = positionInBeats
+//                tickCount += (increment - lastPosition) * Double(midiResolution)
+//                lastPosition = positionInBeats
+//                lastPosition = tickCount
+
                 notes.append(
                     Note(
                         position: Int(round(Double(tickCount) / resolutionRatio)),
-                        velocity: Double(event.data[2]) / 127.0,
+                        velocity: 1, //Double(event.data[2]) / 127.0,
                         instrument: Int(event.data[1] - 36)
                     )
                 )
             } else if type == .noteOff {
-                tickCount += positionInBeats * Double(midiResolution)
+//                tickCount += positionInBeats * Double(midiResolution)
+                tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
+                lastPositionInBeats = positionInBeats
             }
         }
 
-        let pattern = Pattern(name: "Pattern1", size: Int(tickCount), noteList: notes)
+        let quarterNotesCount  = ceil(tickCount / Double(midiResolution))
+        let length = quarterNotesCount * Double(hydrogenResolution)
+        let pattern = Pattern(name: "Pattern1", size: Int(length), noteList: notes)
 
         patternList = [pattern]
     }
@@ -109,28 +122,31 @@ public class Convertor: ObservableObject {
 
     private func patternXML(_ pattern: Pattern) -> XML {
         let nameTag = XML(name: "name", value: pattern.name)
+        let infoTag = XML(name: "info")
         let categoryTag = XML(name: "category", value: "unknown")
-        let sizeTag = XML(name: "size", value: 192)
+        let sizeTag = XML(name: "size", value: pattern.size)
         let denominatorTag = XML(name: "denominator", value: "4")
-        let noteListTag = XML(name: "notelist")
+        let noteListTag = XML(name: "noteList")
         for note in pattern.noteList {
             let positionTag = XML(name: "position", value: note.position)
             let leadlagTag = XML(name: "leadlag", value: 0)
             let velocityTag = XML(name: "velocity", value: note.velocity)
-            let panTag = XML(name: "velocity", value: 0)
+            let panTag = XML(name: "pan", value: 0)
             let pitchTag = XML(name: "pitch", value: 0)
             let keyTag = XML(name: "key", value: "C0")
             let lengthTag = XML(name: "length", value: "-1")
             let instrumentTag = XML(name: "instrument", value: note.instrument)
+            let noteOffTag = XML(name: "note_off", value: false)
+            let probabilityTag = XML(name: "probability", value: 1)
 
             let noteTag = XML(name: "note")
-                .addChildren([positionTag, leadlagTag, velocityTag, panTag, pitchTag, keyTag, lengthTag, instrumentTag])
+                .addChildren([positionTag, leadlagTag, velocityTag, panTag, pitchTag, keyTag, lengthTag, instrumentTag, noteOffTag, probabilityTag])
 
             noteListTag.addChild(noteTag)
         }
 
         let patternTag = XML(name: "pattern")
-            .addChildren([nameTag, categoryTag, sizeTag, denominatorTag, noteListTag])
+            .addChildren([nameTag, infoTag, categoryTag, sizeTag, denominatorTag, noteListTag])
 
         return patternTag
     }
