@@ -12,20 +12,29 @@ import AudioKitEX
 import AudioKitUI
 import SwiftUI
 
+/// magic number for resolution of hydrogen files
+let hydrogenResolution: Int = 48
+
+/// number of beats per quarter note in midi file
+var midiResolution: Int = 0
+
+/// number of beats per quarter in midi file / number of beats per quater in hydrogen
+var resolutionRatio: Double = 1
+
+/// Number of quarter beats in measure
+let beatsInMeasure = 4
+
+/// Lenght of one measure
+let measureLength = beatsInMeasure * hydrogenResolution // Typically 192
+
+
+
+
 public class Convertor: ObservableObject {
 
     var midiFileURL: URL?
 
     var hydrogenSong: XML?
-
-    /// magic number for resolution of hydrogen files
-    let hydrogenResolution: Int = 48
-
-    /// number of beats per quarter note in midi file
-    var midiResolution: Int = 0
-
-    /// number of beats per quarter in midi file / number of beats per quater in hydrogen
-    var resolutionRatio: Double = 1
 
     /// Array of rhytm patterns
     var patternList = [Pattern]()
@@ -34,10 +43,6 @@ public class Convertor: ObservableObject {
     var patternSequence = [String]()
 
     var notes = [Note]()
-
-    public init() {
-
-    }
 
     public func openFile(url: URL) {
         midiFileURL = url
@@ -57,7 +62,7 @@ public class Convertor: ObservableObject {
         var patternNumber = 1
 //        var lastMeasure: Int = 0
         var lastPositionInBeats: Double = 0
-        var measureStart: Int = 0
+        var lastMeasureNumber = 0
 
         notes = []
         patternList = []
@@ -72,23 +77,34 @@ public class Convertor: ObservableObject {
             }
 
             if type == .noteOn {
-                measureStart = Int(positionInBeats / 4)
+//                if Int(lastPositionInBeats / 4) != Int(positionInBeats / 4) {
+//                    let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
+//                    patternList.append(pattern)
+//                    patternNumber += 1
+//                    notes = []
+//                }
 
-                if Int(lastPositionInBeats / 4) != Int(positionInBeats / 4) {
+                tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
+                lastPositionInBeats = positionInBeats
+
+//                let tickCountFromMeasure = tickCount - Double(measureStart) * Double(midiResolution)
+
+                let position = Int(round(Double(tickCount) / resolutionRatio))
+                
+                if (position / 192) > lastMeasureNumber {
                     let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
                     patternList.append(pattern)
                     patternNumber += 1
                     notes = []
                 }
 
-                tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
-                lastPositionInBeats = positionInBeats
-
-                let tickCountFromMeasure = tickCount - Double(measureStart) * Double(midiResolution)
+                // The begin of current measure
+                lastMeasureNumber = (position / measureLength)
+                let notePosition = Int(round(Double(tickCount) / resolutionRatio)) - lastMeasureNumber * measureLength
 
                 notes.append(
                     Note(
-                        position: Int(round(Double(tickCountFromMeasure) / resolutionRatio)),
+                        position: notePosition,
                         velocity: Double(event.data[2]) / 127.0,
                         instrument: Int(event.data[1] - 36)
                     )
