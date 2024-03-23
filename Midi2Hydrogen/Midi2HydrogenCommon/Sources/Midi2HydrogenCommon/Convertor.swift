@@ -54,11 +54,13 @@ public class Convertor: ObservableObject {
         
         var tickCount: Double = 0
 
+        var patternNumber = 1
+//        var lastMeasure: Int = 0
+        var lastPositionInBeats: Double = 0
+        var measureStart: Int = 0
+
         notes = []
         patternList = []
-        patternSequence = ["Pattern1"]
-
-        var lastPositionInBeats: Double = 0
 
         firstTrack.events.forEach { event in
             guard 
@@ -70,23 +72,28 @@ public class Convertor: ObservableObject {
             }
 
             if type == .noteOn {
+                measureStart = Int(positionInBeats / 4)
+
+                if Int(lastPositionInBeats / 4) != Int(positionInBeats / 4) {
+                    let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
+                    patternList.append(pattern)
+                    patternNumber += 1
+                    notes = []
+                }
+
                 tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
                 lastPositionInBeats = positionInBeats
 
-//                let increment = positionInBeats
-//                tickCount += (increment - lastPosition) * Double(midiResolution)
-//                lastPosition = positionInBeats
-//                lastPosition = tickCount
+                let tickCountFromMeasure = tickCount - Double(measureStart) * Double(midiResolution)
 
                 notes.append(
                     Note(
-                        position: Int(round(Double(tickCount) / resolutionRatio)),
+                        position: Int(round(Double(tickCountFromMeasure) / resolutionRatio)),
                         velocity: Double(event.data[2]) / 127.0,
                         instrument: Int(event.data[1] - 36)
                     )
                 )
             } else if type == .noteOff {
-//                tickCount += positionInBeats * Double(midiResolution)
                 tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
                 lastPositionInBeats = positionInBeats
             }
@@ -94,9 +101,12 @@ public class Convertor: ObservableObject {
 
         let quarterNotesCount  = ceil(tickCount / Double(midiResolution))
         let length = quarterNotesCount * Double(hydrogenResolution)
-        let pattern = Pattern(name: "Pattern1", size: Int(length), noteList: notes)
+       
+        // let pattern = Pattern(name: "Pattern1", size: Int(length), noteList: notes)
+        let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
+        patternList.append(pattern)
 
-        patternList = [pattern]
+        patternSequence = patternList.map { $0.name }
     }
 
     public func saveHydrogenSong(url: URL) throws {
