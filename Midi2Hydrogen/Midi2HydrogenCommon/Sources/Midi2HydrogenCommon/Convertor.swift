@@ -111,7 +111,7 @@ public class Convertor: ObservableObject {
 
     public func saveHydrogenSong(url: URL) throws {
         // let modifiedUrl = url.deletingPathExtension().appendingPathExtension("h2song")
-
+//        let documentUrl = url.deletingPathExtension().appendingPathExtension("h2song")
         try? FileManager.default.removeItem(at: url)
 
         hydrogenSong = XML(string: song)
