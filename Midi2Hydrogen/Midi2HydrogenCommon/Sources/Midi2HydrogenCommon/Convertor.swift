@@ -81,7 +81,7 @@ public class Convertor: ObservableObject {
                 notes.append(
                     Note(
                         position: Int(round(Double(tickCount) / resolutionRatio)),
-                        velocity: 1, //Double(event.data[2]) / 127.0,
+                        velocity: Double(event.data[2]) / 127.0,
                         instrument: Int(event.data[1] - 36)
                     )
                 )
