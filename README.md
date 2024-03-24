@@ -13,3 +13,7 @@ A free macOS utility for conversion of the MIDI files into Hydrogen Drum Machine
 <p align="center">
     <img src="https://i.ibb.co/16LgfVP/Hydrogen.png" width="621" max-width="621" alt="Screenshot" />
 </p>
+
+I got some inspiration from similar projects
+* https://github.com/brandjamie/midi2hydro_pattern
+* https://github.com/RushOnline/midi2hydrogen
