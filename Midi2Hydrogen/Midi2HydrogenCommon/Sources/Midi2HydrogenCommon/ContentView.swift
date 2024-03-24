@@ -7,10 +7,11 @@ import UniformTypeIdentifiers
 public struct ContentView: View {
     @StateObject var viewModel = MIDITrackViewModel()
     @StateObject var convertor = Convertor()
-    @State var fileURL: URL? = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
+    @State var fileURL: URL? // = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
     @State var isPlaying = false
     @State private var isImporting: Bool = false
     @State private var isExporting: Bool = false
+    @State private var isFileOpen: Bool = false
 
     @State private var document = HydrogenSongFile()
 
@@ -19,8 +20,9 @@ public struct ContentView: View {
     }
 
     public var body: some View {
-        VStack(spacing: 80) {
+        VStack(alignment: .leading, spacing: 80) {
             HStack(spacing: 20) {
+
                 Button("Open MIDI File...") {
                     isImporting = true
                 }
@@ -36,6 +38,9 @@ public struct ContentView: View {
 
                     switch result {
                     case .success(let url):
+                        isFileOpen = true
+                        fileURL = url
+                        viewModel.loadSequencerFile(fileURL: url)
                         convertor.openFile(url: url)
 
                     case .failure(let error):
@@ -48,11 +53,12 @@ public struct ContentView: View {
                     isExporting = true
                 }
                 .padding()
-                .foregroundColor(.white)
+                .foregroundColor(isFileOpen ? .white : .gray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 25)
                         .stroke(Color.white, lineWidth: 2)
                 )
+                .disabled(!isFileOpen)
                 .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .plainText) { result in
                     switch result {
                     case .success(let url):
@@ -62,6 +68,13 @@ public struct ContentView: View {
                         print(error.localizedDescription)
                     }
                 }
+
+                Spacer()
+
+                Image("SmallLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 46)
 
             }
 
@@ -102,9 +115,9 @@ public struct ContentView: View {
         })
         .onAppear(perform: {
             viewModel.startEngine()
-            if let fileURL = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid") {
-                viewModel.loadSequencerFile(fileURL: fileURL)
-            }
+//            if let fileURL = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid") {
+//                viewModel.loadSequencerFile(fileURL: fileURL)
+//            }
         })
         .onDisappear(perform: {
             viewModel.stop()
