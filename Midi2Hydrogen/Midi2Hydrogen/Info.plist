@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>AudioKit</string>
+	<string>MIDI 2 Hydrogen</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
