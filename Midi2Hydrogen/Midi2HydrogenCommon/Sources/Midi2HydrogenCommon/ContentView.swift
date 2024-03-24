@@ -56,7 +56,7 @@ public struct ContentView: View {
                 .foregroundColor(isFileOpen ? .white : .gray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color.white, lineWidth: 2)
+                        .stroke(isFileOpen ? Color.white : Color.gray, lineWidth: 2)
                 )
                 .disabled(!isFileOpen)
                 .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .plainText) { result in
