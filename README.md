@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.ibb.co/HHnz8bN/BigLogo.png" width="674" max-width="674" alt="MIDI 2 Hydrogen" />
+    <img src="https://i.ibb.co/4VXqvV9/BigLogo.png" width="674" max-width="674" alt="MIDI 2 Hydrogen" />
 </p>
 
 # MIDI 2 Hydrogen
