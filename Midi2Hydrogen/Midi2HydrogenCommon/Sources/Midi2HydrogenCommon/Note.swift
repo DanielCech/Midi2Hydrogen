@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Note {
+struct Note: Equatable {
     let position: Int
     let velocity: Double
     let instrument: Int

@@ -42,6 +42,8 @@ public class Convertor: ObservableObject {
     /// A sequence of patterns that makes song
     var patternSequence = [String]()
 
+    var patternNumber = 1
+
     var notes = [Note]()
 
     public func openFile(url: URL) {
@@ -59,13 +61,13 @@ public class Convertor: ObservableObject {
         
         var tickCount: Double = 0
 
-        var patternNumber = 1
+
 //        var lastMeasure: Int = 0
         var lastPositionInBeats: Double = 0
         var lastMeasureNumber = 0
 
-        notes = []
         patternList = []
+        notes = []
 
         firstTrack.events.forEach { event in
             guard 
@@ -92,10 +94,7 @@ public class Convertor: ObservableObject {
                 let position = Int(round(Double(tickCount) / resolutionRatio))
                 
                 if (position / 192) > lastMeasureNumber {
-                    let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
-                    patternList.append(pattern)
-                    patternNumber += 1
-                    notes = []
+                    addPattern()
                 }
 
                 // The begin of current measure
@@ -115,14 +114,39 @@ public class Convertor: ObservableObject {
             }
         }
 
-        let quarterNotesCount  = ceil(tickCount / Double(midiResolution))
-        let length = quarterNotesCount * Double(hydrogenResolution)
-       
-        // let pattern = Pattern(name: "Pattern1", size: Int(length), noteList: notes)
-        let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
-        patternList.append(pattern)
+        // let quarterNotesCount  = ceil(tickCount / Double(midiResolution))
+        // let length = quarterNotesCount * Double(hydrogenResolution)
 
-        patternSequence = patternList.map { $0.name }
+        // let pattern = Pattern(name: "Pattern1", size: Int(length), noteList: notes)
+//        let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
+//
+//        for knownPattern in patternList {
+//            if knownPattern == pattern {
+//                patternSequence.append(knownPattern.name)
+//            } else {
+//                patternList.append(pattern)
+//                patternSequence.append(pattern.name)
+//            }
+//        }
+
+        addPattern()
+    }
+
+    private func addPattern() {
+        let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
+
+        for knownPattern in patternList {
+            if knownPattern == pattern {
+                patternSequence.append(knownPattern.name)
+                notes = []
+                return
+            }
+        }
+
+        patternList.append(pattern)
+        patternSequence.append(pattern.name)
+        patternNumber += 1
+        notes = []
     }
 
     public func saveHydrogenSong(url: URL) throws {

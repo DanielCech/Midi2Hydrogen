@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct Pattern {
+struct Pattern: Equatable {
     let name: String
     let size: Int
     let noteList: [Note]
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.noteList == rhs.noteList
+    }
 }
