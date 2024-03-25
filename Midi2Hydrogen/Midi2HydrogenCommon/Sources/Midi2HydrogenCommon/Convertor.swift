@@ -12,25 +12,22 @@ import AudioKitEX
 import AudioKitUI
 import SwiftUI
 
-/// magic number for resolution of hydrogen files
-let hydrogenResolution: Int = 48
-
-/// number of beats per quarter note in midi file
-var midiResolution: Int = 0
-
-/// number of beats per quarter in midi file / number of beats per quater in hydrogen
-var resolutionRatio: Double = 1
-
-/// Number of quarter beats in measure
-let beatsInMeasure = 4
-
-/// Lenght of one measure
-let measureLength = beatsInMeasure * hydrogenResolution // Typically 192
-
-
-
-
 public class Convertor: ObservableObject {
+
+    /// magic number for resolution of hydrogen files
+    let hydrogenResolution: Int = 48
+
+    /// number of beats per quarter note in midi file
+    var midiResolution: Int = 0
+
+    /// number of beats per quarter in midi file / number of beats per quater in hydrogen
+    var resolutionRatio: Double = 1
+
+    /// Number of quarter beats in measure
+    let beatsInMeasure = 4
+
+    /// Lenght of one measure
+    lazy var measureLength = beatsInMeasure * hydrogenResolution // Typically 192
 
     var midiFileURL: URL?
 
@@ -67,6 +64,8 @@ public class Convertor: ObservableObject {
         var lastMeasureNumber = 0
 
         patternList = []
+        patternSequence = []
+        patternNumber = 1
         notes = []
 
         firstTrack.events.forEach { event in
@@ -105,7 +104,7 @@ public class Convertor: ObservableObject {
                     Note(
                         position: notePosition,
                         velocity: Double(event.data[2]) / 127.0,
-                        instrument: Int(event.data[1] - 36)
+                        instrument: Int(Int(event.data[1]) - 36)
                     )
                 )
             } else if type == .noteOff {

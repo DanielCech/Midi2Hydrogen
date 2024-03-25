@@ -12,12 +12,12 @@
 			<key>CFBundleIdentifier</key>
 			<string></string>
 			<key>CFBundleTypeName</key>
-			<string>H2Song File</string>
+			<string>Hydrogen Song File</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>cz.dancech.h2song</string>
+				<string>com.hydrogen.hydrogenSong</string>
 			</array>
 		</dict>
 		<dict>

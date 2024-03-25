@@ -59,7 +59,7 @@ public struct ContentView: View {
                         .stroke(isFileOpen ? Color.white : Color.gray, lineWidth: 2)
                 )
                 .disabled(!isFileOpen)
-                .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .plainText) { result in
+                .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .hydrogenSong) { result in
                     switch result {
                     case .success(let url):
                         try? convertor.saveHydrogenSong(url: url)
