@@ -22,6 +22,11 @@ I got some inspiration from similar projects
 
 The binary is available in the release section. Or build it by yourself :-).
 
+## Future plans
+
+* Support MIDI files with more than one track
+* Support for various Hydrogen drumsets and custom instrument mapping
+
 ## Contributing
 
 - Feel free to open an issue
