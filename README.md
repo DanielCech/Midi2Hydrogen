@@ -18,6 +18,10 @@ I got some inspiration from similar projects
 * https://github.com/brandjamie/midi2hydro_pattern
 * https://github.com/RushOnline/midi2hydrogen
 
+## Installation
+
+The binary is available in the release section. Or build it by yourself :-).
+
 ## Contributing
 
 - Feel free to open an issue
