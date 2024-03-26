@@ -29,8 +29,10 @@ public class Convertor: ObservableObject {
     /// Lenght of one measure
     lazy var measureLength = beatsInMeasure * hydrogenResolution // Typically 192
 
+    /// Input file URL
     var midiFileURL: URL?
 
+    /// Output file XML structure
     var hydrogenSong: XML?
 
     /// Array of rhytm patterns
@@ -39,8 +41,10 @@ public class Convertor: ObservableObject {
     /// A sequence of patterns that makes song
     var patternSequence = [String]()
 
+    /// The counter of patterns in song
     var patternNumber = 1
 
+    /// Notes in the current pattern
     var notes = [Note]()
 
     public func openFile(url: URL) {
@@ -57,9 +61,6 @@ public class Convertor: ObservableObject {
         }
         
         var tickCount: Double = 0
-
-
-//        var lastMeasure: Int = 0
         var lastPositionInBeats: Double = 0
         var lastMeasureNumber = 0
 
@@ -78,17 +79,8 @@ public class Convertor: ObservableObject {
             }
 
             if type == .noteOn {
-//                if Int(lastPositionInBeats / 4) != Int(positionInBeats / 4) {
-//                    let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
-//                    patternList.append(pattern)
-//                    patternNumber += 1
-//                    notes = []
-//                }
-
                 tickCount += (positionInBeats - lastPositionInBeats) * Double(midiResolution)
                 lastPositionInBeats = positionInBeats
-
-//                let tickCountFromMeasure = tickCount - Double(measureStart) * Double(midiResolution)
 
                 let position = Int(round(Double(tickCount) / resolutionRatio))
                 
@@ -113,21 +105,6 @@ public class Convertor: ObservableObject {
             }
         }
 
-        // let quarterNotesCount  = ceil(tickCount / Double(midiResolution))
-        // let length = quarterNotesCount * Double(hydrogenResolution)
-
-        // let pattern = Pattern(name: "Pattern1", size: Int(length), noteList: notes)
-//        let pattern = Pattern(name: "Pattern\(patternNumber)", size: 192, noteList: notes)
-//
-//        for knownPattern in patternList {
-//            if knownPattern == pattern {
-//                patternSequence.append(knownPattern.name)
-//            } else {
-//                patternList.append(pattern)
-//                patternSequence.append(pattern.name)
-//            }
-//        }
-
         addPattern()
     }
 
@@ -149,8 +126,6 @@ public class Convertor: ObservableObject {
     }
 
     public func saveHydrogenSong(url: URL) throws {
-        // let modifiedUrl = url.deletingPathExtension().appendingPathExtension("h2song")
-//        let documentUrl = url.deletingPathExtension().appendingPathExtension("h2song")
         try? FileManager.default.removeItem(at: url)
 
         hydrogenSong = XML(string: song)
