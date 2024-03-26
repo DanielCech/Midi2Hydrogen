@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  UTType+Hydrogen.swift
 //  
 //
 //  Created by Daniel Cech on 25.03.2024.

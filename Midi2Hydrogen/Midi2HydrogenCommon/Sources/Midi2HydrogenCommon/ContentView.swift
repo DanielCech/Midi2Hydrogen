@@ -59,7 +59,7 @@ public struct ContentView: View {
                         .stroke(isFileOpen ? Color.white : Color.gray, lineWidth: 2)
                 )
                 .disabled(!isFileOpen)
-                .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .hydrogenSong) { result in
+                .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .hydrogenSong, defaultFilename: fileURL?.lastPathComponent.withoutExtension) { result in
                     switch result {
                     case .success(let url):
                         try? convertor.saveHydrogenSong(url: url)
@@ -115,9 +115,6 @@ public struct ContentView: View {
         })
         .onAppear(perform: {
             viewModel.startEngine()
-//            if let fileURL = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid") {
-//                viewModel.loadSequencerFile(fileURL: fileURL)
-//            }
         })
         .onDisappear(perform: {
             viewModel.stop()
