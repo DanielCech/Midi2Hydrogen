@@ -17,3 +17,16 @@ A free macOS utility for conversion of the MIDI files into Hydrogen Drum Machine
 I got some inspiration from similar projects
 * https://github.com/brandjamie/midi2hydro_pattern
 * https://github.com/RushOnline/midi2hydrogen
+
+## Contributing
+
+- Feel free to open an issue
+- Pull requests are very welcome!
+
+## Author
+
+[Daniel Čech](https://github.com/DanielCech)
+
+## License
+
+[MIT](https://github.com/DanielCech/Midi2Hydrogen/blob/master/LICENSE)
