@@ -8,5 +8,19 @@
 import Foundation
 
 final class ContentViewModel: ObservableObject {
-    @Published var mappings = ["Hello", "Cuz"]
+    let convertor = Convertor()
+
+    @Published var midiInstruments = [String]()
+
+    func openFile(url: URL) {
+        convertor.openFile(url: url)
+        midiInstruments = Array(convertor.midiInstruments)
+            .map { String($0) }
+            .sorted()
+    }
+
+    func saveHydrogenSong(url: URL) throws {
+        try convertor.saveHydrogenSong(url: url)
+    }
+
 }

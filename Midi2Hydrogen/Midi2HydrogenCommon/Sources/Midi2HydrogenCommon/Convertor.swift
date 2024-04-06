@@ -13,7 +13,6 @@ import AudioKitUI
 import SwiftUI
 
 public class Convertor: ObservableObject {
-
     /// magic number for resolution of hydrogen files
     let hydrogenResolution: Int = 48
 
@@ -47,6 +46,18 @@ public class Convertor: ObservableObject {
     /// Notes in the current pattern
     var notes = [Note]()
 
+    /// A set of MIDI notes for various drum instruments in the MIDI file
+    var midiInstruments = Set<Int>()
+
+    /// Available instruments in the drumkit
+    var drumkitInstruments = [String]()
+
+    init() {
+        openHydrogenSongTemplate()
+        
+        processDrumkitInstruments()
+    }
+
     public func openFile(url: URL) {
         midiFileURL = url
 
@@ -68,6 +79,7 @@ public class Convertor: ObservableObject {
         patternSequence = []
         patternNumber = 1
         notes = []
+        midiInstruments = Set<Int>()
 
         firstTrack.events.forEach { event in
             guard 
@@ -91,6 +103,8 @@ public class Convertor: ObservableObject {
                 // The begin of current measure
                 lastMeasureNumber = (position / measureLength)
                 let notePosition = Int(round(Double(tickCount) / resolutionRatio)) - lastMeasureNumber * measureLength
+
+                midiInstruments.insert(Int(event.data[1]))
 
                 notes.append(
                     Note(
@@ -125,10 +139,14 @@ public class Convertor: ObservableObject {
         notes = []
     }
 
+    func openHydrogenSongTemplate() {
+        hydrogenSong = XML(string: song)
+    }
+
     public func saveHydrogenSong(url: URL) throws {
         try? FileManager.default.removeItem(at: url)
 
-        hydrogenSong = XML(string: song)
+        openHydrogenSongTemplate()
         savePatternList()
         savePatternSequence()
 
@@ -182,6 +200,16 @@ public class Convertor: ObservableObject {
             let patternId = XML(name: "patternID", value: item)
             let groupTag = XML(name: "group").addChild(patternId)
             patternSequenceTag.addChild(groupTag)
+        }
+    }
+
+    private func processDrumkitInstruments() {
+        guard let instrumentListTag = try? hydrogenSong?.instrumentList.getXML() else { return }
+
+        for instrument in instrumentListTag.xmlChildren {
+            if let instrumentName = instrument.name.string {
+                drumkitInstruments.append(instrumentName)
+            }
         }
     }
 }

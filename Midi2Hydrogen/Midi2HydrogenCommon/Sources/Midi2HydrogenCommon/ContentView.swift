@@ -7,8 +7,7 @@ import UniformTypeIdentifiers
 public struct ContentView: View {
     @ObservedObject var viewModel = ContentViewModel()
     @StateObject var trackViewModel = MIDITrackViewModel()
-    @StateObject var convertor = Convertor()
-    
+
     @State var fileURL: URL? // = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
     @State var isPlaying = false
     @State private var isImporting: Bool = false
@@ -20,12 +19,6 @@ public struct ContentView: View {
     @State private var document = HydrogenSongFile()
 
     @State var selectedPickerItem: String?
-    var pickerItems = ["item 1",
-                       "item 2",
-                       "item 3",
-                       "item 4",
-                       "item 5",
-                       "item 6"]
 
     public init() {
 
@@ -61,7 +54,7 @@ public struct ContentView: View {
                 instrumentMapping()
             }
 
-            
+
 
         }
         .padding(.zero)
@@ -111,7 +104,7 @@ public struct ContentView: View {
                 isFileOpen = true
                 fileURL = url
                 trackViewModel.loadSequencerFile(fileURL: url)
-                convertor.openFile(url: url)
+                viewModel.openFile(url: url)
 
             case .failure(let error):
                 print(error)
@@ -134,7 +127,7 @@ public struct ContentView: View {
         .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .hydrogenSong, defaultFilename: fileURL?.lastPathComponent.withoutExtension) { result in
             switch result {
             case .success(let url):
-                try? convertor.saveHydrogenSong(url: url)
+                try? viewModel.saveHydrogenSong(url: url)
 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -143,21 +136,21 @@ public struct ContentView: View {
     }
 
     private func midiTrackView() -> some View {
-            GeometryReader { geometry in
-                if let fileURL = fileURL {
-                    ForEach(
-                        MIDIFile(url: fileURL).tracks.indices, id: \.self
-                    ) { number in
-                        MIDITrackView(fileURL: $fileURL,
-                                      trackNumber: number,
-                                      trackWidth: geometry.size.width,
-                                      trackHeight: 200.0)
-                        .background(Color.primary)
-                        .cornerRadius(10.0)
-                    }
+        GeometryReader { geometry in
+            if let fileURL = fileURL {
+                ForEach(
+                    MIDIFile(url: fileURL).tracks.indices, id: \.self
+                ) { number in
+                    MIDITrackView(fileURL: $fileURL,
+                                  trackNumber: number,
+                                  trackWidth: geometry.size.width,
+                                  trackHeight: 200.0)
+                    .background(Color.primary)
+                    .cornerRadius(10.0)
                 }
             }
-            .padding(.top, 250)
+        }
+        .padding(.top, 250)
 
 
     }
@@ -170,14 +163,13 @@ public struct ContentView: View {
             }
 
             Section {
-                ForEach(viewModel.mappings, id: \.self) { mapping in
-
+                ForEach(viewModel.midiInstruments, id: \.self) { mapping in
                     Picker(selection: $selectedPickerItem, label: Text("\(mapping):")) {
-                                Text("No Chosen Item").tag(nil as String?)
-                                ForEach(pickerItems, id: \.self) { item in
-                                    Text(item).tag(item as String?)
-                                }
-                            }
+                        Text("No Chosen Item").tag(nil as String?)
+                        ForEach(viewModel.convertor.drumkitInstruments, id: \.self) { item in
+                            Text(item).tag(item as String?)
+                        }
+                    }
 
                 }
 
