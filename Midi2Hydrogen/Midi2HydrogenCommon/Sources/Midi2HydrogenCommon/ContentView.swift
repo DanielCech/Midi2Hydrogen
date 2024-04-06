@@ -103,7 +103,7 @@ public struct ContentView: View {
                 fileURL = url
                 trackViewModel.loadSequencerFile(fileURL: url)
                 viewModel.openFile(url: url)
-                instrumentMapping = viewModel.convertor.instrumentMapping
+                instrumentMapping = viewModel.instrumentMapping
 
             case .failure(let error):
                 print(error)
@@ -165,13 +165,24 @@ public struct ContentView: View {
                 ForEach(viewModel.midiInstruments, id: \.self) { midiInstrument in
                     Picker(selection: $instrumentMapping[midiInstrument], label: Text("\(midiInstrument):")) {
                         Text("No Chosen Item").tag(nil as String?)
-                        ForEach(viewModel.convertor.drumkitInstruments, id: \.self) { item in
+                        ForEach(viewModel.drumkitInstruments, id: \.self) { item in
                             Text(item).tag(item as String?)
                         }
                     }
 
                 }
 
+            }
+
+            Section {
+                Button("Load Mapping...") {
+                    viewModel.loadMapping()
+                }
+
+                Button("Save Mapping...") {
+                    viewModel.saveMapping()
+                }
+                .disabled(viewModel.midiInstruments.isEmpty)
             }
 
         }
