@@ -14,9 +14,12 @@ import SwiftUI
 
 public class ContentViewModel: ObservableObject {
 
+    @Published var tracks = [String]()
+
     @Published var midiInstruments = [Int]()
 
-    var instrumentMapping = [Int: String]()
+    /// Instrument assignment
+    @Published var instrumentMapping = [Int: String]()
 
     /// magic number for resolution of hydrogen files
     let hydrogenResolution: Int = 48
@@ -32,6 +35,9 @@ public class ContentViewModel: ObservableObject {
 
     /// Lenght of one measure
     lazy var measureLength = beatsInMeasure * hydrogenResolution // Typically 192
+
+    /// Input file
+    var midiFile: MIDIFile?
 
     /// Input file URL
     var midiFileURL: URL?
@@ -51,9 +57,6 @@ public class ContentViewModel: ObservableObject {
     /// Notes in the current pattern
     var notes = [Note]()
 
-//    /// A set of MIDI notes for various drum instruments in the MIDI file
-//    var midiInstrumentSet = Set<Int>()
-
     /// Available instruments in the drumkit
     var drumkitInstruments = [String]()
 
@@ -63,19 +66,55 @@ public class ContentViewModel: ObservableObject {
         processDrumkitInstruments()
     }
 
+    /// Initial preprocessing of file
     public func openFile(url: URL) {
         midiFileURL = url
+        midiFile = MIDIFile(url: url)
 
-        let midiFile = MIDIFile(url: url)
+        guard let midiFile else { return }
+
         print(String(describing: midiFile))
 
         midiResolution = Int(midiFile.timeDivision)
         resolutionRatio = Double(midiResolution) / Double(hydrogenResolution)
 
-        guard let firstTrack = midiFile.tracks.first else {
+        tracks = (0 ..< midiFile.tracks.count).map { String($0) }
+    }
+
+    /// Preprocess selected track
+    public func preprocessSelectedTrack(track: Int) {
+        guard let track = midiFile?.tracks[safe: track] else {
             fatalError("MIDI file does not contain tracks")
         }
-        
+
+        instrumentMapping = [:]
+
+        track.events.forEach { event in
+            guard
+                let status = event.status,
+                let type = status.type
+            else {
+                return
+            }
+
+            if type == .noteOn {
+                let midiKey = Int(event.data[1])
+
+                if let drumkitInstrument = drumkitInstruments[safe: midiKey - 36] {
+                    instrumentMapping[midiKey] = drumkitInstrument
+                }
+            }
+        }
+
+        midiInstruments = Array(instrumentMapping.keys).sorted()
+    }
+
+    /// Preprocess selected track
+    public func convert(track: Int) {
+        guard let track = midiFile?.tracks[safe: track] else {
+            fatalError("MIDI file does not contain tracks")
+        }
+
         var tickCount: Double = 0
         var lastPositionInBeats: Double = 0
         var lastMeasureNumber = 0
@@ -85,8 +124,8 @@ public class ContentViewModel: ObservableObject {
         patternNumber = 1
         notes = []
 
-        firstTrack.events.forEach { event in
-            guard 
+        track.events.forEach { event in
+            guard
                 let status = event.status,
                 let type = status.type,
                 let positionInBeats = event.positionInBeats
@@ -99,7 +138,7 @@ public class ContentViewModel: ObservableObject {
                 lastPositionInBeats = positionInBeats
 
                 let position = Int(round(Double(tickCount) / resolutionRatio))
-                
+
                 if (position / 192) > lastMeasureNumber {
                     addPattern()
                 }
@@ -107,12 +146,6 @@ public class ContentViewModel: ObservableObject {
                 // The begin of current measure
                 lastMeasureNumber = (position / measureLength)
                 let notePosition = Int(round(Double(tickCount) / resolutionRatio)) - lastMeasureNumber * measureLength
-
-                let midiKey = Int(event.data[1])
-
-                if let drumkitInstrument = drumkitInstruments[safe: midiKey - 36] {
-                    instrumentMapping[midiKey] = drumkitInstrument
-                }
 
                 notes.append(
                     Note(
@@ -128,8 +161,6 @@ public class ContentViewModel: ObservableObject {
         }
 
         addPattern()
-
-        midiInstruments = Array(instrumentMapping.keys).sorted()
     }
 
     private func addPattern() {
