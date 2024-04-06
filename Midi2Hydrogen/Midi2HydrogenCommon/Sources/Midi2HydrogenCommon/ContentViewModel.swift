@@ -10,12 +10,12 @@ import Foundation
 final class ContentViewModel: ObservableObject {
     let convertor = Convertor()
 
-    @Published var midiInstruments = [String]()
+    @Published var midiInstruments = [Int]()
 
     func openFile(url: URL) {
         convertor.openFile(url: url)
         midiInstruments = Array(convertor.midiInstruments)
-            .map { String($0) }
+//            .map { String($0) }
             .sorted()
     }
 

@@ -13,6 +13,9 @@ import AudioKitUI
 import SwiftUI
 
 public class Convertor: ObservableObject {
+
+    var instrumentMapping = [Int: String]()
+
     /// magic number for resolution of hydrogen files
     let hydrogenResolution: Int = 48
 
@@ -104,7 +107,12 @@ public class Convertor: ObservableObject {
                 lastMeasureNumber = (position / measureLength)
                 let notePosition = Int(round(Double(tickCount) / resolutionRatio)) - lastMeasureNumber * measureLength
 
-                midiInstruments.insert(Int(event.data[1]))
+                let midiKey = Int(event.data[1])
+                midiInstruments.insert(midiKey)
+
+                if let drumkitInstrument = drumkitInstruments[safe: midiKey - 36] {
+                    instrumentMapping[midiKey] = drumkitInstrument
+                }
 
                 notes.append(
                     Note(

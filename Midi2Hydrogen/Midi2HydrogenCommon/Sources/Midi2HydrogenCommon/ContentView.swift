@@ -18,11 +18,7 @@ public struct ContentView: View {
 
     @State private var document = HydrogenSongFile()
 
-    @State var selectedPickerItem: String?
-
-    public init() {
-
-    }
+    @State var instrumentMapping = [Int: String]()
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -43,15 +39,20 @@ public struct ContentView: View {
             }
 
             Color.gray
+                .opacity(0.5)
                 .frame(height: 1)
 
             HStack() {
                 midiTrackView()
+                    .onTapGesture {
+                        isPlaying.toggle()
+                    }
 
                 Color.gray
+                    .opacity(0.5)
                     .frame(width: 1)
 
-                instrumentMapping()
+                instrumentMappingView()
             }
 
 
@@ -63,9 +64,6 @@ public struct ContentView: View {
                 .resizable(resizingMode: .stretch)
         )
         .navigationBarTitle(Text("Midi2Hydrogen"))
-        .onTapGesture {
-            isPlaying.toggle()
-        }
         .onChange(of: isPlaying, perform: { newValue in
             if newValue == true {
                 trackViewModel.play()
@@ -105,6 +103,7 @@ public struct ContentView: View {
                 fileURL = url
                 trackViewModel.loadSequencerFile(fileURL: url)
                 viewModel.openFile(url: url)
+                instrumentMapping = viewModel.convertor.instrumentMapping
 
             case .failure(let error):
                 print(error)
@@ -156,15 +155,15 @@ public struct ContentView: View {
     }
 
 
-    private func instrumentMapping() -> some View {
+    private func instrumentMappingView() -> some View {
         Form {
             Section {
                 TextField("Drumkit path", text: $drumkitPath)
             }
 
             Section {
-                ForEach(viewModel.midiInstruments, id: \.self) { mapping in
-                    Picker(selection: $selectedPickerItem, label: Text("\(mapping):")) {
+                ForEach(viewModel.midiInstruments, id: \.self) { midiInstrument in
+                    Picker(selection: $instrumentMapping[midiInstrument], label: Text("\(midiInstrument):")) {
                         Text("No Chosen Item").tag(nil as String?)
                         ForEach(viewModel.convertor.drumkitInstruments, id: \.self) { item in
                             Text(item).tag(item as String?)
