@@ -73,8 +73,6 @@ public class ContentViewModel: ObservableObject {
 
         guard let midiFile else { return }
 
-        print(String(describing: midiFile))
-
         midiResolution = Int(midiFile.timeDivision)
         resolutionRatio = Double(midiResolution) / Double(hydrogenResolution)
 

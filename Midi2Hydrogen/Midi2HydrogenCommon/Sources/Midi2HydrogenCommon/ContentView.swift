@@ -158,13 +158,21 @@ public struct ContentView: View {
 
                 Spacer()
 
-                Text("Example of MIDI mapping:")
-                Image("DrumMapping")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(10.0)
-                    .frame(height: 328)
-                    .padding()
+                Text("Examples of MIDI mapping from GuitarPro:")
+                HStack(spacing: 10) {
+                    Image("DrumMapping")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10.0)
+                        .padding()
+
+                    Image("Drums")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10.0)
+                        .padding()
+                }
+                .frame(height: 328)
             }
         }
     }
