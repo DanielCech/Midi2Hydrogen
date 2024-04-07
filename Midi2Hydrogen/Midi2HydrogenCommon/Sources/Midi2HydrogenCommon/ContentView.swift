@@ -21,6 +21,10 @@ public struct ContentView: View {
     @State var selectedTrack: String?
     //    @State var instrumentMapping = [Int: String]()
 
+    var selectedTrackInt: Int {
+        Int(selectedTrack ?? "0") ?? 0
+    }
+
     public init() {
     }
 
@@ -132,6 +136,7 @@ public struct ContentView: View {
         .fileExporter(isPresented: $isExporting, document: HydrogenSongFile(), contentType: .hydrogenSong, defaultFilename: fileURL?.lastPathComponent.withoutExtension) { result in
             switch result {
             case .success(let url):
+                viewModel.convert(track: selectedTrackInt)
                 try? viewModel.saveHydrogenSong(url: url)
 
             case .failure(let error):
@@ -148,7 +153,7 @@ public struct ContentView: View {
                         .padding(.top, 10)
 
                     MIDITrackView(fileURL: $fileURL,
-                                  trackNumber: Int(selectedTrack ?? "0") ?? 0,
+                                  trackNumber: selectedTrackInt,
                                   trackWidth: geometry.size.width - 40,
                                   trackHeight: 200.0)
                     .background(Color.primary)

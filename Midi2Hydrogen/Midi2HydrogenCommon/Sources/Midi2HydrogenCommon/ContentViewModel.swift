@@ -16,10 +16,17 @@ public class ContentViewModel: ObservableObject {
 
     @Published var tracks = [String]()
 
+    // MARK: - Instruments
+
     @Published var midiInstruments = [Int]()
 
     /// Instrument assignment
     @Published var instrumentMapping = [Int: String]()
+
+    /// Available instruments in the drumkit
+    var drumkitInstruments = [String]()
+
+    // MARK: - Parameters
 
     /// magic number for resolution of hydrogen files
     let hydrogenResolution: Int = 48
@@ -36,6 +43,8 @@ public class ContentViewModel: ObservableObject {
     /// Lenght of one measure
     lazy var measureLength = beatsInMeasure * hydrogenResolution // Typically 192
 
+    // MARK: - Files
+
     /// Input file
     var midiFile: MIDIFile?
 
@@ -44,6 +53,8 @@ public class ContentViewModel: ObservableObject {
 
     /// Output file XML structure
     var hydrogenSong: XML?
+
+    // MARK: - Patterns
 
     /// Array of rhytm patterns
     var patternList = [Pattern]()
@@ -56,9 +67,6 @@ public class ContentViewModel: ObservableObject {
 
     /// Notes in the current pattern
     var notes = [Note]()
-
-    /// Available instruments in the drumkit
-    var drumkitInstruments = [String]()
 
     init() {
         openHydrogenSongTemplate()
@@ -145,11 +153,23 @@ public class ContentViewModel: ObservableObject {
                 lastMeasureNumber = (position / measureLength)
                 let notePosition = Int(round(Double(tickCount) / resolutionRatio)) - lastMeasureNumber * measureLength
 
+                let midiInstrument = Int(event.data[1])
+                let mappedInstrument: Int
+
+                if
+                    let instrumentString = instrumentMapping[midiInstrument],
+                    let instrumentInt = drumkitInstruments.firstIndex(of: instrumentString)
+                {
+                    mappedInstrument = instrumentInt
+                } else {
+                    mappedInstrument = 35 // Some fallback value
+                }
+
                 notes.append(
                     Note(
                         position: notePosition,
                         velocity: Double(event.data[2]) / 127.0,
-                        instrument: Int(Int(event.data[1]) - 36)
+                        instrument: mappedInstrument
                     )
                 )
             } else if type == .noteOff {
