@@ -19,8 +19,10 @@ public struct ContentView: View {
     @State private var document = HydrogenSongFile()
 
     @State var selectedTrack: String?
-//    @State var instrumentMapping = [Int: String]()
+    //    @State var instrumentMapping = [Int: String]()
 
+    public init() {
+    }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -140,73 +142,83 @@ public struct ContentView: View {
 
     private func midiTrackView() -> some View {
         GeometryReader { geometry in
-            if let fileURL = fileURL {
-                ForEach(
-                    MIDIFile(url: fileURL).tracks.indices, id: \.self
-                ) { number in
+            VStack(alignment: .center, spacing: 0) {
+                if fileURL != nil {
+                    Text("MIDI Track View:")
+                        .padding(.top, 10)
+
                     MIDITrackView(fileURL: $fileURL,
-                                  trackNumber: number,
-                                  trackWidth: geometry.size.width,
+                                  trackNumber: Int(selectedTrack ?? "0") ?? 0,
+                                  trackWidth: geometry.size.width - 40,
                                   trackHeight: 200.0)
                     .background(Color.primary)
                     .cornerRadius(10.0)
+                    .padding()
                 }
+
+                Spacer()
+
+                Text("Example of MIDI mapping:")
+                Image("DrumMapping")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(10.0)
+                    .frame(height: 328)
+                    .padding()
             }
         }
-        .padding(.top, 250)
-
-
     }
 
 
-    private func instrumentMappingView() -> some View {
-        Form {
-            if viewModel.tracks.isNotEmpty {
-                Section {
-                    Picker(selection: $selectedTrack, label: Text("MIDI Track")) {
-                        Text("No Chosen Item").tag(nil as String?)
-                        ForEach(viewModel.tracks, id: \.self) { trackNumber in
-                            Text(trackNumber).tag(trackNumber as String?)
-                        }
+
+private func instrumentMappingView() -> some View {
+    Form {
+        if viewModel.tracks.isNotEmpty {
+            Section {
+                Picker(selection: $selectedTrack, label: Text("MIDI Track")) {
+                    Text("No Chosen Item").tag(nil as String?)
+                    ForEach(viewModel.tracks, id: \.self) { trackNumber in
+                        Text(trackNumber).tag(trackNumber as String?)
                     }
-//                    .onChange(of: selectedTrack) { trackString in
-//                        if let trackInt = Int(trackString) {
-//                            viewModel.preprocessSelectedTrack(track: trackInt)
-//                        }
-//                    }
                 }
+                //                    .onChange(of: selectedTrack) { trackString in
+                //                        if let trackInt = Int(trackString) {
+                //                            viewModel.preprocessSelectedTrack(track: trackInt)
+                //                        }
+                //                    }
             }
+        }
 
-            Section {
-                TextField("Drumkit path", text: $drumkitPath)
-            }
+        Section {
+            TextField("Drumkit path", text: $drumkitPath)
+        }
 
-            Section {
-                ForEach(viewModel.midiInstruments, id: \.self) { midiInstrument in
-                    Picker(selection: $viewModel.instrumentMapping[midiInstrument], label: Text("\(midiInstrument):")) {
-                        Text("No Chosen Item").tag(nil as String?)
-                        ForEach(viewModel.drumkitInstruments, id: \.self) { item in
-                            Text(item).tag(item as String?)
-                        }
+        Section {
+            ForEach(viewModel.midiInstruments, id: \.self) { midiInstrument in
+                Picker(selection: $viewModel.instrumentMapping[midiInstrument], label: Text("\(midiInstrument):")) {
+                    Text("No Chosen Item").tag(nil as String?)
+                    ForEach(viewModel.drumkitInstruments, id: \.self) { item in
+                        Text(item).tag(item as String?)
                     }
-
                 }
 
-            }
-
-            Section {
-                Button("Load Mapping...") {
-                    viewModel.loadMapping()
-                }
-
-                Button("Save Mapping...") {
-                    viewModel.saveMapping()
-                }
-                .disabled(viewModel.midiInstruments.isEmpty)
             }
 
         }
-        .scrollContentBackground(.hidden)
-        .frame(width: 310)
+
+        Section {
+            Button("Load Mapping...") {
+                viewModel.loadMapping()
+            }
+
+            Button("Save Mapping...") {
+                viewModel.saveMapping()
+            }
+            .disabled(viewModel.midiInstruments.isEmpty)
+        }
+
     }
+    .scrollContentBackground(.hidden)
+    .frame(width: 310)
+}
 }
