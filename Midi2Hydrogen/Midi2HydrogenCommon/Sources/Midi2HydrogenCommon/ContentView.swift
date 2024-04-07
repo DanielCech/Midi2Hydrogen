@@ -10,7 +10,8 @@ public struct ContentView: View {
 
     @State var fileURL: URL? // = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
     @State var isPlaying = false
-    @State private var isImporting: Bool = false
+    @State private var isImportingMidi: Bool = false
+    @State private var isImportingDrumkit: Bool = false
     @State private var isExporting: Bool = false
     @State private var isFileOpen: Bool = false
 
@@ -31,8 +32,15 @@ public struct ContentView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
-                openButton()
+                openMidiButton()
                     .padding()
+
+                Image("Arrow1")
+
+                openDrumkitFromSongButton()
+                    .padding()
+
+                Image("Arrow2")
 
                 convertButton()
                     .padding()
@@ -90,9 +98,9 @@ public struct ContentView: View {
     }
 
 
-    private func openButton() -> some View {
+    private func openMidiButton() -> some View {
         Button("Open MIDI File...") {
-            isImporting = true
+            isImportingMidi = true
         }
         .padding()
         .foregroundColor(.white)
@@ -101,7 +109,7 @@ public struct ContentView: View {
             RoundedRectangle(cornerRadius: 25)
                 .stroke(Color.white, lineWidth: 2)
         )
-        .fileImporter(isPresented: $isImporting,
+        .fileImporter(isPresented: $isImportingMidi,
                       allowedContentTypes: [.midi],
                       onCompletion: { result in
 
@@ -121,8 +129,40 @@ public struct ContentView: View {
         })
     }
 
+    private func openDrumkitFromSongButton() -> some View {
+        Button("Drumkit from Song...") {
+            isImportingDrumkit = true
+        }
+        .padding()
+        .foregroundColor(.white)
+        .backgroundStyle(.gray.opacity(0.1))
+        .overlay(
+            RoundedRectangle(cornerRadius: 25)
+                .stroke(Color.white, lineWidth: 2)
+        )
+        .fileImporter(isPresented: $isImportingDrumkit,
+                      allowedContentTypes: [.hydrogenSong],
+                      onCompletion: { result in
+
+            switch result {
+            case .success(let url):
+                break
+//                isFileOpen = true
+//                fileURL = url
+//                trackViewModel.loadSequencerFile(fileURL: url)
+//                viewModel.openFile(url: url)
+//                selectedTrack = "0"
+//                viewModel.preprocessSelectedTrack(track: 0)
+
+
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
+
     private func convertButton() -> some View {
-        Button("Convert to Hydrogen Song") {
+        Button("Convert to Hydrogen Song...") {
             isExporting = true
         }
         .padding()
