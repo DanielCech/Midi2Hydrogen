@@ -146,14 +146,7 @@ public struct ContentView: View {
 
             switch result {
             case .success(let url):
-                break
-//                isFileOpen = true
-//                fileURL = url
-//                trackViewModel.loadSequencerFile(fileURL: url)
-//                viewModel.openFile(url: url)
-//                selectedTrack = "0"
-//                viewModel.preprocessSelectedTrack(track: 0)
-
+                viewModel.loadDrumkit(url: url)
 
             case .failure(let error):
                 print(error)
@@ -188,6 +181,8 @@ public struct ContentView: View {
     private func midiTrackView() -> some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 0) {
+                Spacer()
+
                 if fileURL != nil {
                     Text("MIDI Track View:")
                         .padding(.top, 10)
@@ -243,7 +238,9 @@ private func instrumentMappingView() -> some View {
         }
 
         Section {
-            TextField("Drumkit path", text: $drumkitPath)
+            Text("Drumkit path:")
+            TextEditor(text: $viewModel.drumkitPath)
+                .frame(height: 100)
         }
 
         Section {

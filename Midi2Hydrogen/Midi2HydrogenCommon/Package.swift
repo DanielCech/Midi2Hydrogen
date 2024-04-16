@@ -27,12 +27,7 @@ let package = Package(
         .target(
             name: "Midi2HydrogenCommon",
             dependencies: ["AudioKit", "AudioKitUI", "AudioKitEX", "Keyboard", "SoundpipeAudioKit",
-                           "SporthAudioKit", "STKAudioKit", "DunneAudioKit", "Tonic", "Controls", "Waveform", "Flow", "PianoRoll", "MIDIKit", "SwiftyXML"],
-            resources: [
-                .copy("MIDI Files"),
-                .copy("Samples"),
-                .copy("Impulse Responses"),
-            ]
+                           "SporthAudioKit", "STKAudioKit", "DunneAudioKit", "Tonic", "Controls", "Waveform", "Flow", "PianoRoll", "MIDIKit", "SwiftyXML"]
         ),
         .testTarget(name: "Midi2HydrogenCommonTests", dependencies: ["Midi2HydrogenCommon"]),
     ]

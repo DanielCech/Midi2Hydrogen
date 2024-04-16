@@ -23,6 +23,8 @@ public class ContentViewModel: ObservableObject {
     /// Instrument assignment
     @Published var instrumentMapping = [Int: String]()
 
+    @Published var drumkitPath: String = ""
+
     /// Available instruments in the drumkit
     var drumkitInstruments = [String]()
 
@@ -53,6 +55,8 @@ public class ContentViewModel: ObservableObject {
 
     /// Output file XML structure
     var hydrogenSong: XML?
+
+    var instrumentList: XML?
 
     // MARK: - Patterns
 
@@ -200,6 +204,11 @@ public class ContentViewModel: ObservableObject {
 
     func openHydrogenSongTemplate() {
         hydrogenSong = XML(string: song)
+        instrumentList = try? hydrogenSong?.instrumentList.getXML()
+
+        if let value = try? instrumentList?.xmlChildren.first!.drumkitPath.getXML().stringValue {
+            drumkitPath = value
+        }
     }
 
     public func saveHydrogenSong(url: URL) throws {
@@ -268,6 +277,24 @@ public class ContentViewModel: ObservableObject {
         for instrument in instrumentListTag.xmlChildren {
             if let instrumentName = instrument.name.string {
                 drumkitInstruments.append(instrumentName)
+            }
+        }
+    }
+}
+
+// MARK: - Drumkits from song
+
+extension ContentViewModel {
+    func loadDrumkit(url: URL) {
+        guard let drumkitXML = XML(url: url) else {
+            return
+        }
+
+        instrumentList = try? drumkitXML.instrumentList.getXML()
+
+        if let instrument = instrumentList?.xmlChildren.first {
+            if let value = try? instrument.drumkitPath.getXML().stringValue {
+                drumkitPath = value
             }
         }
     }
