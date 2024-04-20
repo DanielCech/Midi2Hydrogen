@@ -7,7 +7,7 @@
 
 import Foundation
 
-let song =
+let gmRockKitSongXML =
 """
 <?xml version="1.0" encoding="UTF-8"?>
 <song>
@@ -42,7 +42,50 @@ let song =
    <volume>1</volume>
   </drumkitComponent>
  </componentList>
- <instrumentList>
+ <patternList>
+ </patternList>
+ <virtualPatternList/>
+ <patternSequence>
+ </patternSequence>
+ <ladspa>
+  <fx>
+   <name>no plugin</name>
+   <filename>-</filename>
+   <enabled>false</enabled>
+   <volume>0</volume>
+  </fx>
+  <fx>
+   <name>no plugin</name>
+   <filename>-</filename>
+   <enabled>false</enabled>
+   <volume>0</volume>
+  </fx>
+  <fx>
+   <name>no plugin</name>
+   <filename>-</filename>
+   <enabled>false</enabled>
+   <volume>0</volume>
+  </fx>
+  <fx>
+   <name>no plugin</name>
+   <filename>-</filename>
+   <enabled>false</enabled>
+   <volume>0</volume>
+  </fx>
+ </ladspa>
+ <BPMTimeLine/>
+ <timeLineTag/>
+ <automationPaths>
+  <path adjust="velocity"/>
+ </automationPaths>
+</song>
+"""
+
+
+
+let gmRockKitInstrumentListXML =
+"""
+<instrumentList>
   <instrument>
    <id>0</id>
    <name>Kick</name>
@@ -2020,41 +2063,4 @@ let song =
    </instrumentComponent>
   </instrument>
  </instrumentList>
- <patternList>
- </patternList>
- <virtualPatternList/>
- <patternSequence>
- </patternSequence>
- <ladspa>
-  <fx>
-   <name>no plugin</name>
-   <filename>-</filename>
-   <enabled>false</enabled>
-   <volume>0</volume>
-  </fx>
-  <fx>
-   <name>no plugin</name>
-   <filename>-</filename>
-   <enabled>false</enabled>
-   <volume>0</volume>
-  </fx>
-  <fx>
-   <name>no plugin</name>
-   <filename>-</filename>
-   <enabled>false</enabled>
-   <volume>0</volume>
-  </fx>
-  <fx>
-   <name>no plugin</name>
-   <filename>-</filename>
-   <enabled>false</enabled>
-   <volume>0</volume>
-  </fx>
- </ladspa>
- <BPMTimeLine/>
- <timeLineTag/>
- <automationPaths>
-  <path adjust="velocity"/>
- </automationPaths>
-</song>
 """

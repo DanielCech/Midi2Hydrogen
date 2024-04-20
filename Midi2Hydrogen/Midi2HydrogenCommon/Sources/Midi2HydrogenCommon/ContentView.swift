@@ -8,14 +8,12 @@ public struct ContentView: View {
     @ObservedObject var viewModel = ContentViewModel()
     @StateObject var trackViewModel = MIDITrackViewModel()
 
-    @State var fileURL: URL? // = Bundle.module.url(forResource: "MIDI Files/Walkabout", withExtension: "mid")
+    @State var fileURL: URL?
     @State var isPlaying = false
     @State private var isImportingMidi: Bool = false
     @State private var isImportingDrumkit: Bool = false
     @State private var isExporting: Bool = false
     @State private var isFileOpen: Bool = false
-
-    @State private var drumkitPath: String = ""
 
     @State private var document = HydrogenSongFile()
 
@@ -200,6 +198,8 @@ public struct ContentView: View {
 
                 Text("Examples of MIDI mapping from GuitarPro:")
                 HStack(spacing: 10) {
+                    Spacer()
+
                     Image("DrumMapping")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -211,6 +211,8 @@ public struct ContentView: View {
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10.0)
                         .padding()
+
+                    Spacer()
                 }
                 .frame(height: 328)
             }
@@ -238,7 +240,8 @@ private func instrumentMappingView() -> some View {
         }
 
         Section {
-            Text("Drumkit path:")
+            TextEditor(text: $viewModel.drumkit)
+
             TextEditor(text: $viewModel.drumkitPath)
                 .frame(height: 100)
         }

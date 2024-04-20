@@ -23,10 +23,11 @@ public class ContentViewModel: ObservableObject {
     /// Instrument assignment
     @Published var instrumentMapping = [Int: String]()
 
+    @Published var drumkit: String = "GMRockKit"
     @Published var drumkitPath: String = ""
 
     /// Available instruments in the drumkit
-    var drumkitInstruments = [String]()
+    @Published var drumkitInstruments = [String]()
 
     // MARK: - Parameters
 
@@ -74,8 +75,7 @@ public class ContentViewModel: ObservableObject {
 
     init() {
         openHydrogenSongTemplate()
-        
-        processDrumkitInstruments()
+        processDrumkitInstruments(instrumentList: XML(string: gmRockKitInstrumentListXML))
     }
 
     /// Initial preprocessing of file
@@ -203,12 +203,7 @@ public class ContentViewModel: ObservableObject {
     }
 
     func openHydrogenSongTemplate() {
-        hydrogenSong = XML(string: song)
-        instrumentList = try? hydrogenSong?.instrumentList.getXML()
-
-        if let value = try? instrumentList?.xmlChildren.first!.drumkitPath.getXML().stringValue {
-            drumkitPath = value
-        }
+        hydrogenSong = XML(string: gmRockKitSongXML)
     }
 
     public func saveHydrogenSong(url: URL) throws {
@@ -217,6 +212,7 @@ public class ContentViewModel: ObservableObject {
         openHydrogenSongTemplate()
         savePatternList()
         savePatternSequence()
+        safeInstrumentList()
 
         let contents = hydrogenSong?.toXMLString()
         try contents?.write(to: url, atomically: true, encoding: .utf8)
@@ -271,12 +267,39 @@ public class ContentViewModel: ObservableObject {
         }
     }
 
-    private func processDrumkitInstruments() {
-        guard let instrumentListTag = try? hydrogenSong?.instrumentList.getXML() else { return }
+    private func safeInstrumentList() {
+        if let instrumentList {
+            hydrogenSong?.addChild(instrumentList)
+        } else {
+            hydrogenSong?.addChild(XML(string: gmRockKitInstrumentListXML))
+        }
+    }
 
-        for instrument in instrumentListTag.xmlChildren {
+    private func processDrumkitInstruments(instrumentList: XML) {
+        if let value = try? instrumentList.xmlChildren.first!.drumkitPath.getXML().stringValue {
+            drumkitPath = value
+        }
+
+        self.instrumentList = instrumentList
+        drumkitInstruments = []
+
+        for instrument in instrumentList.xmlChildren {
             if let instrumentName = instrument.name.string {
                 drumkitInstruments.append(instrumentName)
+            }
+        }
+
+        if let firstInstrument = instrumentList.xmlChildren.first {
+            if let value = try? firstInstrument.drumkit.getXML().stringValue {
+                drumkit = value
+            } else {
+                drumkit = ""
+            }
+
+            if let value = try? firstInstrument.drumkitPath.getXML().stringValue {
+                drumkitPath = value
+            } else {
+                drumkitPath = ""
             }
         }
     }
@@ -290,13 +313,8 @@ extension ContentViewModel {
             return
         }
 
-        instrumentList = try? drumkitXML.instrumentList.getXML()
-
-        if let instrument = instrumentList?.xmlChildren.first {
-            if let value = try? instrument.drumkitPath.getXML().stringValue {
-                drumkitPath = value
-            }
-        }
+        guard let instrumentList = try? drumkitXML.instrumentList.getXML() else { return }
+        processDrumkitInstruments(instrumentList: instrumentList)
     }
 }
 
