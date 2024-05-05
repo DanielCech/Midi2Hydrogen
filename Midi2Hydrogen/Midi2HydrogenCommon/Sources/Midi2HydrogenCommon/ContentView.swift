@@ -196,25 +196,14 @@ public struct ContentView: View {
 
                 Spacer()
 
-                Text("Examples of MIDI mapping from GuitarPro:")
-                HStack(spacing: 10) {
-                    Spacer()
+                Text("General MIDI mapping from GuitarPro:")
+                Image("DrumKit")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(10.0)
+                    .frame(height: 678)
+                    .padding()
 
-                    Image("DrumMapping")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(10.0)
-                        .padding()
-
-                    Image("Drums")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(10.0)
-                        .padding()
-
-                    Spacer()
-                }
-                .frame(height: 328)
             }
         }
     }
