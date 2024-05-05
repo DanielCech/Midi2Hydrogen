@@ -1,4 +1,6 @@
-![image](https://github.com/DanielCech/Midi2Hydrogen/assets/3081522/ffaa42ce-5dbb-4471-b1a6-6addb0df34a5)
+<p align="center">
+  <img width="674" height="452" src="https://github.com/DanielCech/Midi2Hydrogen/assets/3081522/ffaa42ce-5dbb-4471-b1a6-6addb0df34a5">
+</p>
 
 # MIDI 2 Hydrogen
 
