@@ -7,11 +7,11 @@
 A free macOS utility for conversion of the MIDI files into Hydrogen Drum Machine song (h2song). It converts MIDI into the song - a sequence of patterns. It can detect the pattern duplicates. The MIDI file should have just one track. Currently, only GMRockKit is supported. The application uses the AudioKit library.
 
 <p align="center">
-    <img src="https://i.ibb.co/WWdH2TT/Screenshot.png" width="621" max-width="621" alt="Screenshot" />
+    <img src="https://github.com/DanielCech/Midi2Hydrogen/assets/3081522/2d9f661f-f6f3-4954-91c6-47429e5e9e63" width="763" max-width="763" alt="Screenshot" />
 </p>
 
 <p align="center">
-    <img src="https://i.ibb.co/16LgfVP/Hydrogen.png" width="621" max-width="621" alt="Screenshot" />
+    <img src="https://github.com/DanielCech/Midi2Hydrogen/assets/3081522/9d50fc06-dbf5-4ed7-9c3a-f7e493f156e9" width="640" max-width="640" alt="Hydrogen" />
 </p>
 
 I got some inspiration from similar projects
