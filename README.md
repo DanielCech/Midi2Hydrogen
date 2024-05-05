@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.ibb.co/4VXqvV9/BigLogo.png" width="674" max-width="674" alt="MIDI 2 Hydrogen" />
+    ![image](https://github.com/DanielCech/Midi2Hydrogen/assets/3081522/ffaa42ce-5dbb-4471-b1a6-6addb0df34a5)
 </p>
 
 # MIDI 2 Hydrogen
