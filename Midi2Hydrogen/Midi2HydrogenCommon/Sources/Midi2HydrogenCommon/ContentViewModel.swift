@@ -322,11 +322,27 @@ extension ContentViewModel {
 
 extension ContentViewModel {
 
-    func loadMapping() {
+    func loadMapping(url: URL) throws {
+        let jsonData = try Data(contentsOf: url)
+        guard let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: String] else { return }
 
+        var convertedInstrumentMapping = [Int: String]()
+        dict.forEach { (key: String, value: String) in
+            if let intKey = Int(key) {
+                convertedInstrumentMapping[intKey] = value
+            }
+        }
+
+        instrumentMapping = convertedInstrumentMapping
     }
 
-    func saveMapping() {
-        
+    func saveMapping(url: URL) throws {
+        var convertedInstrumentMapping = [String: String]()
+        instrumentMapping.forEach { (key: Int, value: String) in
+            convertedInstrumentMapping[String(key)] = value
+        }
+
+        let jsonData = try JSONSerialization.data(withJSONObject: convertedInstrumentMapping, options: .prettyPrinted)
+        try jsonData.write(to: url)
     }
 }

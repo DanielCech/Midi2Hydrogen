@@ -11,9 +11,9 @@ import SwiftUI
 
 struct HydrogenSongFile: FileDocument {
     // tell the system we support only plain text
-    static var readableContentTypes = [UTType.midi, .hydrogenSong]
+    static var readableContentTypes = [UTType.midi, .hydrogenSong, .json]
 
-    static var writableContentTypes: [UTType] { [.hydrogenSong] }
+    static var writableContentTypes: [UTType] { [.hydrogenSong, .json] }
 
     // by default our document is empty
     var text = ""

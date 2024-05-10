@@ -13,7 +13,10 @@ public struct ContentView: View {
     @State private var isImportingMidi: Bool = false
     @State private var isImportingDrumkit: Bool = false
     @State private var isExporting: Bool = false
+    @State private var isLoadingMapping: Bool = false
+    @State private var isSavingMapping: Bool = false
     @State private var isFileOpen: Bool = false
+    @State private var showAbout: Bool = false
 
     @State private var document = HydrogenSongFile()
 
@@ -50,6 +53,10 @@ public struct ContentView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 46)
                     .padding()
+                    .onTapGesture {
+                        showAbout = true
+                    }
+                    .alert("MIDI2Hydrogen by Daniel Cech\n\nhttps://github.com/DanielCech/Midi2Hydrogen", isPresented: $showAbout, actions: {})
             }
 
             Color.gray
@@ -192,6 +199,10 @@ public struct ContentView: View {
                     .background(Color.primary)
                     .cornerRadius(10.0)
                     .padding()
+                } else {
+                    Color.clear
+                        .frame(height: 200)
+                        .padding()
                 }
 
                 Spacer()
@@ -250,13 +261,32 @@ private func instrumentMappingView() -> some View {
 
         Section {
             Button("Load Mapping...") {
-                viewModel.loadMapping()
+                isLoadingMapping = true
+            }
+            .fileImporter(isPresented: $isLoadingMapping, allowedContentTypes: [.json]) { result in
+                switch result {
+                case .success(let url):
+                    try? viewModel.loadMapping(url: url)
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
 
             Button("Save Mapping...") {
-                viewModel.saveMapping()
+                isSavingMapping = true
             }
             .disabled(viewModel.midiInstruments.isEmpty)
+            .fileExporter(isPresented: $isSavingMapping, document: HydrogenSongFile(), contentType: .json, defaultFilename: fileURL?.lastPathComponent.withoutExtension) { result in
+                switch result {
+                case .success(let url):
+                    try? viewModel.saveMapping(url: url)
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+
         }
 
     }
