@@ -17,11 +17,8 @@ public struct ContentView: View {
     @State private var isSavingMapping: Bool = false
     @State private var isFileOpen: Bool = false
     @State private var showAbout: Bool = false
-
     @State private var document = HydrogenSongFile()
-
     @State var selectedTrack: String?
-    //    @State var instrumentMapping = [Int: String]()
 
     var selectedTrackInt: Int {
         Int(selectedTrack ?? "0") ?? 0
@@ -251,11 +248,6 @@ private func instrumentMappingView() -> some View {
                         Text(trackNumber).tag(trackNumber as String?)
                     }
                 }
-                //                    .onChange(of: selectedTrack) { trackString in
-                //                        if let trackInt = Int(trackString) {
-                //                            viewModel.preprocessSelectedTrack(track: trackInt)
-                //                        }
-                //                    }
             }
         }
 
@@ -267,7 +259,7 @@ private func instrumentMappingView() -> some View {
         }
 
         Section {
-            ForEach(viewModel.midiInstruments, id: \.self) { midiInstrument in
+            ForEach(viewModel.instrumentMappingKeys, id: \.self) { midiInstrument in
                 Picker(selection: $viewModel.instrumentMapping[midiInstrument], label: Text("\(midiInstrument):")) {
                     Text("No Chosen Item").tag(nil as String?)
                     ForEach(viewModel.drumkitInstruments, id: \.self) { item in

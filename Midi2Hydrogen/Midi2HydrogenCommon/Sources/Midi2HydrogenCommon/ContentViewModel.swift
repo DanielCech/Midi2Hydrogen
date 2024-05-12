@@ -29,6 +29,11 @@ public class ContentViewModel: ObservableObject {
     /// Available instruments in the drumkit
     @Published var drumkitInstruments = [String]()
 
+    var instrumentMappingKeys: [Int] {
+        instrumentMapping.keys
+            .sorted()
+    }
+
     // MARK: - Parameters
 
     /// magic number for resolution of hydrogen files
