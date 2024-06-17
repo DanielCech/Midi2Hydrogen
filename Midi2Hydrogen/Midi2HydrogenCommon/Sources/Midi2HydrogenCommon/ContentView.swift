@@ -103,7 +103,7 @@ public struct ContentView: View {
     private func openMidiButton() -> some View {
         Button(
             action: {
-            isImportingMidi = true
+                isImportingMidi = true
             },
             label: {
                 Text("Open MIDI File...")
@@ -173,7 +173,7 @@ public struct ContentView: View {
     private func convertButton() -> some View {
         Button(
             action: {
-            isImportingMidi = true
+                isExporting = true
             },
             label: {
                 Text("Convert to Hydrogen Song...")
